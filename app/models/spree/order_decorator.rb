@@ -24,8 +24,8 @@ Spree::Order.class_eval do
     self.errors[:delivery_time].empty? ? true : false
   end
 
-  def valid_delivery_options?(force_check=false)
-    if force_check || ((self.delivery_date && self.delivery_date_changed?) && (self.delivery_time && self.delivery_time_changed?)) 
+  def valid_delivery_options?
+    if (self.delivery_date && self.delivery_date_changed?) && (self.delivery_time && self.delivery_time_changed?)
       self.errors[:delivery_date] << 'cannot be today or in the past' if self.delivery_date <= Date.current
 
       options = current_delivery_options_for_date(self.delivery_date)
@@ -50,6 +50,3 @@ Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_deli
 Spree::Order.state_machine.before_transition :to => :payment, :do => :delivery_date_present?
 Spree::Order.state_machine.before_transition :to => :payment, :do => :delivery_time_present?
 Spree::Order.state_machine.before_transition :to => :payment, :do => :valid_delivery_options?
-Spree::Order.state_machine.before_transition :to => :complete do |order, transition|
-  order.valid_delivery_options?(true)
-end
