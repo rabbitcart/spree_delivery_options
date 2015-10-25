@@ -1,3 +1,4 @@
 //= require jquery
-//= require moment_js/moment.min
+//= require jquery_ujs
+//= require spree/moment
 //= require spree/backend/delivery_time_options

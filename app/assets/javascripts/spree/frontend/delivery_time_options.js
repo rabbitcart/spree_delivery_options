@@ -3,18 +3,10 @@ function SpreeDeliveryOptions() {
   var that = this;
 
   this.initializeDatePicker = function() {
-     $('#order_delivery_date').datepicker({
-       dateFormat: "dd/mm/yy",
-       minDate: 1 
-     });
-  };
 
-  this.initializeDeliveryTimeSelect = function() {
-    this.update_delivery_time_options();
-
-    $('#order_delivery_date').change(function(event){
-      that.update_delivery_time_options();
-    });
+    var dNow = new Date();
+    var utcdate= (dNow.getMonth()+ 1) + '/' + dNow.getDate() + '/' + dNow.getFullYear();
+     $('#order_delivery_date').text(utcdate);
   };
 
   this.parseDeliveryOptions = function(deliveryDate) {
@@ -83,5 +75,4 @@ function SpreeDeliveryOptions() {
 $(document).ready(function() {
   var deliveryOptions = new SpreeDeliveryOptions();
   deliveryOptions.initializeDatePicker();
-  deliveryOptions.initializeDeliveryTimeSelect();
 });
